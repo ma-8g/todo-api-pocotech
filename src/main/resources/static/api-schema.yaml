@@ -6,6 +6,11 @@ info:
 servers:
   - url: http://localhost:8080
     description: 開発環境
+tags:
+    - name: Todo
+      description: Todo管理に関する操作
+    - name: opts
+      description: 運用監視用API
 
 paths:
   /api/todos:
@@ -103,6 +108,24 @@ paths:
       responses:
         '204':
           description: Todoの削除に成功
+
+  /health:
+    get:
+      summary: サービスのヘルスチェック
+      operationId: healthCheck
+      tags:
+        - opts
+      responses:
+        '200':
+          description: サービスは正常に稼働中
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "UP"
 
 components:
   schemas:
