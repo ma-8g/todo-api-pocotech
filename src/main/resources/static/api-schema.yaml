@@ -1,0 +1,148 @@
+openapi: 3.0.0
+info:
+  title: Todo API
+  description: シンプルなTodo管理API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: 開発環境
+
+paths:
+  /api/todos:
+    get:
+      summary: すべてのTodoを取得
+      operationId: getTodos
+      tags:
+        - Todo
+      responses:
+        '200':
+          description: Todoリストの取得に成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
+    post:
+      summary: 新しいTodoを作成
+      operationId: createTodo
+      tags:
+        - Todo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTodoRequest'
+      responses:
+        '201':
+          description: Todoの作成に成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+
+  /api/todos/{id}:
+    get:
+      summary: 特定のTodoを取得
+      operationId: getTodoById
+      tags:
+        - Todo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Todoの取得に成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+        '404':
+          description: Todoが見つかりません
+
+    put:
+      summary: Todoを更新
+      operationId: updateTodo
+      tags:
+        - Todo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTodoRequest'
+      responses:
+        '200':
+          description: Todoの更新に成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+
+    delete:
+      summary: Todoを削除
+      operationId: deleteTodo
+      tags:
+        - Todo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Todoの削除に成功
+
+components:
+  schemas:
+    Todo:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "買い物に行く"
+        description:
+          type: string
+          example: "牛乳とパンを買う"
+        completed:
+          type: boolean
+          example: false
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - title
+        - completed
+
+    CreateTodoRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "買い物に行く"
+        description:
+          type: string
+          example: "牛乳とパンを買う"
+        completed:
+          type: boolean
+          example: false
+      required:
+        - title
