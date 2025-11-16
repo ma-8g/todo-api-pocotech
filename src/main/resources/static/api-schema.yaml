@@ -15,11 +15,19 @@ tags:
     description: 運用監視用API（PocoTechレクチャー）
 
 paths:
-  /tasks/1:
+  /tasks/{taskId}:
     get:
       tags:
         - Tasks
       operationId: showTask
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          description: "詳細を取得するタスクのID"
+          schema:
+            type: integer
+            format: int64
       responses:
         '200':
           description: OK
