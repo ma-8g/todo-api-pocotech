@@ -15,9 +15,9 @@ public class TaskController implements TasksApi {
     private final TaskService taskService;
 
     @Override
-    public ResponseEntity<TaskDTO> showTask() {
+    public ResponseEntity<TaskDTO> showTask(Long taskId) {
 
-        TaskEntity entity = taskService.find();
+        TaskEntity entity = taskService.find(taskId);
 
         var dto = new TaskDTO();
         dto.setId(entity.getId());
