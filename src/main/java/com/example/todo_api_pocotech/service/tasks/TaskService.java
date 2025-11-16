@@ -15,7 +15,7 @@ public class TaskService {
                 record.getId(),
                 record.getTitle()
             )
-        ).orElseThrow(() -> new IllegalStateException("TODO")); //TODO
+        ).orElseThrow(() -> new TaskEntityNotFoundException(taskId));
 
     }
 }
