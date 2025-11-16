@@ -1,0 +1,18 @@
+package com.example.todo_api_pocotech.controller.tasks;
+
+import com.example.todoapi.controller.TasksApi;
+import com.example.todoapi.model.TaskDTO;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class TaskController implements TasksApi {
+
+    @Override
+    public ResponseEntity<TaskDTO> showTask() {
+        var body = new TaskDTO();
+        body.setId(1L);
+        body.setTitle("サンプルタスク");
+        return ResponseEntity.ok(body);
+    }
+}

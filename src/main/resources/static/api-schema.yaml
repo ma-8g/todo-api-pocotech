@@ -7,12 +7,27 @@ servers:
   - url: http://localhost:8080
     description: 開発環境
 tags:
-    - name: Todo
-      description: Todo管理に関する操作
-    - name: opts
-      description: 運用監視用API
+  - name: Tasks
+    description: タスク関連API（PocoTechレクチャー）
+  - name: Todo
+    description: Todo管理に関する操作（AI自動生成コード）
+  - name: opts
+    description: 運用監視用API（PocoTechレクチャー）
 
 paths:
+  /tasks/1:
+    get:
+      tags:
+        - Tasks
+      operationId: showTask
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDTO'
+
   /api/todos:
     get:
       summary: すべてのTodoを取得
@@ -129,6 +144,20 @@ paths:
 
 components:
   schemas:
+    TaskDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: "タスクID"
+        title:
+          type: string
+          description: "タスクのタイトル"
+      required:
+        - id
+        - title
+
     Todo:
       type: object
       properties:
