@@ -7,18 +7,32 @@ servers:
   - url: http://localhost:8080
     description: 開発環境
 tags:
-  - name: Tasks
+  - name: task
     description: タスク関連API（PocoTechレクチャー）
   - name: Todo
     description: Todo管理に関する操作（AI自動生成コード）
   - name: opts
-    description: 運用監視用API（PocoTechレクチャー）
+    description: 運用監視用API（AI自動生成コード）
 
 paths:
+  /tasks:
+    post:
+      summary: "タスク作成"
+      description: "タスクを新規作成します"
+      operationId: createTask
+      tags:
+        - task
+      responses:
+        '201':
+          description: "created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDTO'
   /tasks/{taskId}:
     get:
       tags:
-        - Tasks
+        - task
       operationId: showTask
       parameters:
         - name: taskId

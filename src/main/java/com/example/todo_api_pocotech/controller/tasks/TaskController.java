@@ -5,7 +5,10 @@ import com.example.todo_api_pocotech.service.tasks.TaskService;
 import com.example.todoapi.controller.TasksApi;
 import com.example.todoapi.model.TaskDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.config.Task;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,4 +27,13 @@ public class TaskController implements TasksApi {
         dto.setTitle(entity.getTitle());
         return ResponseEntity.ok(dto);
     }
+
+    @Override
+    public ResponseEntity<TaskDTO> createTask() {
+        var dto = new TaskDTO();
+        dto.setId(99L);
+        dto.setTitle("Created!");
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+    }
+
 }
