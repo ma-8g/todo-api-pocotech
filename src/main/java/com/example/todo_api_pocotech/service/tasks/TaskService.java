@@ -1,5 +1,6 @@
 package com.example.todo_api_pocotech.service.tasks;
 
+import com.example.todo_api_pocotech.repository.tasks.TaskRecord.TaskRecord;
 import com.example.todo_api_pocotech.repository.tasks.TaskRepository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,8 @@ public class TaskService {
     }
 
     public TaskEntity create(String title) {
-        return new TaskEntity(999L, title);
+        var record = new TaskRecord(null, title);
+        taskRepository.insert(record);
+        return new TaskEntity(record.getId(), record.getTitle());
     }
 }
