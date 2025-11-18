@@ -4,6 +4,7 @@ import com.example.todo_api_pocotech.service.tasks.TaskEntity;
 import com.example.todo_api_pocotech.service.tasks.TaskService;
 import com.example.todoapi.controller.TasksApi;
 import com.example.todoapi.model.TaskDTO;
+import com.example.todoapi.model.TaskForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -29,10 +30,10 @@ public class TaskController implements TasksApi {
     }
 
     @Override
-    public ResponseEntity<TaskDTO> createTask() {
+    public ResponseEntity<TaskDTO> createTask(TaskForm form) {
         var dto = new TaskDTO();
         dto.setId(99L);
-        dto.setTitle("Created!");
+        dto.setTitle(form.getTitle());
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
