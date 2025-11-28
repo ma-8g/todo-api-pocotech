@@ -6,11 +6,10 @@ import com.example.todoapi.controller.TasksApi;
 import com.example.todoapi.model.TaskDTO;
 import com.example.todoapi.model.TaskForm;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.config.Task;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +34,8 @@ public class TaskController implements TasksApi {
         var dto = new TaskDTO();
         dto.setId(entity.getId());
         dto.setTitle(entity.getTitle());
-        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+        return ResponseEntity.created(URI.create("/tasks/" + dto.getId()))
+                .body(dto);
     }
 
 }
