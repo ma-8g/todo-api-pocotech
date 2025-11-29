@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Todo API
   description: シンプルなTodo管理API
-  version: 1.0.0
+  version: 0.0.1
 servers:
   - url: http://localhost:8080
     description: 開発環境
@@ -40,6 +40,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TaskDTO'
+        '400':
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
   /tasks/{taskId}:
     get:
       tags:
@@ -187,8 +193,8 @@ components:
       type: object
       properties:
         title:
-         type: string
-         description: "作成されるタスクのタイトル"
+          type: string
+          description: "作成されるタスクのタイトル"
       required:
         - title
     TaskDTO:
@@ -217,7 +223,39 @@ components:
       required:
         - title
         - detail
-
+    BadRequestError:
+      description: "リクエストが不正"
+      type: object
+      properties:
+        title:
+          type: string
+          description: "エラーのタイトル"
+          default: "Bad Request"
+        detail:
+          type: string
+          description: "エラーの詳細"
+          default: "リクエストが不正です。正しいリクエストでリトライしてください"
+        invalid-params:
+          type: array
+          items:
+            $ref: "#/components/schemas/InvalidParam"
+      required:
+        - title
+        - detail
+        - invalid-params
+    InvalidParam:
+      description: "不正なリクエストについての詳細"
+      type: object
+      properties:
+        name:
+          type: string
+          description: "エラーが発生したフィールド名"
+        reason:
+          type: string
+          description: "エラーの理由"
+      required:
+        - name
+        - reason
     Todo:
       type: object
       properties:
