@@ -24,15 +24,23 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest request) {
+        var error = BadRequestErrorCreator.from(ex);
         // /tasks エンドポイントへの不正なリクエストボディ（title が null の場合など）に対して BadRequestError を返すはずだが500エラーになるため実行されない。
         return ResponseEntity.badRequest().body(new BadRequestError());
     }
 
     @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(
+            HttpMessageNotReadableException ex,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest request) {
         // /tasks エンドポイントへの不正なリクエストボディ（「"title":」）の場合に BadRequestError を返す
         return ResponseEntity.badRequest().body(new BadRequestError());
     }
-
 }
